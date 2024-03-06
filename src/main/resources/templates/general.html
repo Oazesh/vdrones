@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>VDRONES</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous">
+    </script>
+    <!-- Font Awesome -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+</head>
+
+<body>
+<header th:insert="blocks/header :: header"></header>
+
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 bg-light">
+    <div class="container">
+
+        <div class="bg-image p-5 shadow-1-strong rounded-3 text-white"
+             style="background-image: url('https://sun9-33.userapi.com/impg/x7y8taA0ztXQUP6VKGwmQvQV8LACda77ieGelg/SetBH2TcQCE.jpg?size=1300x600&quality=96&sign=5a2c1360419330ffb02ef22735fbfcca&type=album');"
+        >
+        <div class="container-fluid py-5">
+                <h1 class="display-3 fw-bold">SOSI RU</h1>
+                <p class="col-md-5 fs-4 text-dark">VDRONES! Веб-сайт о предоставлении услуг ремонтирования беспилотных летательных аппаратов!</p>
+            </div>
+        </div>
+
+        <p></p>
+        <div class="row row-cols-md-2 g-3" th:each = "el : ${threePostForGeneral}" >
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="h-100 p-5 text-white bg-dark rounded-3"  >
+                        <h2><text x="20%" y="50%" fill="#eceeef" dy=".3em" th:utext = "${el.title}"/></h2>
+                        <p th:utext = "${el.anons}"/></p>
+                        <form th:action="'/services/' + ${el.id}">
+                            <input class="btn btn-outline-light" type="submit" value="Просмотреть">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img th:src="@{'img/' + ${el.title} + '_' + ${el.id} + ${el.imgFormat}}" width="100%" height="100%">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="blocks/footer :: footer"></div>
+</body>
+</html>
