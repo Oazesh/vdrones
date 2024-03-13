@@ -1,50 +1,33 @@
 <html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<div th:fragment="header">
-    <div class="bg-white collapse" id="navbarHeader" style="">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4 offset-md-10 py-4">
-                    <ul class="list-unstyled">
-                        <li><a href="/" class="text-dark">Главная</a></li>
 
-                        <li><a href="/services" class="text-dark">Услуги</a></li>
-
-                        <div th:if="${#request.isUserInRole('ADMIN')}">
-                            <li><a href="/submittedApplications" class="text-dark">Заявки</a></li>
-                        </div>
-
-                        <div th:if="${#request.isUserInRole('ADMIN')}">
-                            <li><a href="/add" class="text-dark">Добавить услугу</a></li>
-                        </div>
-
-                        <div th:if="${#request.isUserInRole('USER')}">
-                            <li><a href="/submit" class="text-dark">Подать заявку</a></li>
-                        </div>
-
-                        <div sec:authorize="!isAuthenticated()">
-                            <li><a href="/login" class="text-dark" >Войти</a></li>
-                            <li><a href="/registration" class="text-dark">Зарегистрироваться</a></li>
-                        </div>
-
-                        <div sec:authorize="isAuthenticated()">
-                            <li><a href="/logout" class="text-dark">Выйти из аккаунта</a></li>
-                        </div>
-                    </ul>
-                </div>
+<div th:fragment="header"
+     class="bg-dark d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <div class="container d-flex flex-row">
+        <a href="/" class="d-flex  mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <strong class="navbar-brand  text-white ">VDRONES</strong>
+        </a>
+        <ul class="nav nav-pills justify-content-end">
+            <li class="nav-item"><a href="/" class="nav-link text-white text-uppercase" aria-current="page">Главная</a></li>
+            <li class="nav-item"><a href="/services" class="nav-link text-white text-uppercase">Услуги</a></li>
+            <div th:if="${#request.isUserInRole('ADMIN')}">
+                <li class="nav-item"><a href="/submittedApplications" class="nav-link text-white text-uppercase">Заявки</a></li>
             </div>
-        </div>
-    </div>
-
-    <div class="navbar navbar-dark bg-dark shadow-sm">
-        <div class="container">
-            <a href="/" class="navbar-brand d-flex align-items-center">
-                <strong>VDRONES</strong>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
-                    aria-controls="navbarHeader" aria-expanded="true" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
+            <div th:if="${#request.isUserInRole('ADMIN')}">
+                <li class="nav-item"><a href="/add" class="nav-link text-white text-uppercase">Добавить услугу</a></li>
+            </div>
+            <div th:if="${#request.isUserInRole('USER')}">
+                <li class="nav-item"><a href="/submit" class="nav-link text-white text-uppercase">Подать заявку</a></li>
+            </div>
+            <div sec:authorize="!isAuthenticated()">
+                <li class="nav-item"><a href="/login" class="nav-link text-white text-uppercase">Войти</a></li>
+            </div>
+            <div sec:authorize="!isAuthenticated()">
+                <li class="nav-item"><a href="/registration" class="nav-link text-white text-uppercase">Зарегистрироваться</a></li>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <li class="nav-item"><a href="/logout" class="nav-link text-white text-uppercase">Выйти из аккаунта</a></li>
+            </div>
+        </ul>
     </div>
 </div>
 </html>

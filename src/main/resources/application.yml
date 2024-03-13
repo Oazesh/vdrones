@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3307/vdrones
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/vdrones
     username: root
     password: root
   #jpa config
