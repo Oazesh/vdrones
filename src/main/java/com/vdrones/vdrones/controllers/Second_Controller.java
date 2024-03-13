@@ -3,8 +3,10 @@ package com.vdrones.vdrones.controllers;
 
 import com.vdrones.vdrones.dao.entity.post.PostEntity;
 import com.vdrones.vdrones.dao.entity.post.SubmittedApplicationsEntity;
+import com.vdrones.vdrones.dao.entity.users.UserEntity;
 import com.vdrones.vdrones.dao.repository.PostRepository;
 import com.vdrones.vdrones.dao.repository.SubmittedApplicationsRepository;
+import com.vdrones.vdrones.dao.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -20,7 +24,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Optional;
+import java.security.Principal;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
@@ -35,6 +41,9 @@ public class Second_Controller {
     private PostRepository postRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private SubmittedApplicationsRepository submittedApplicationsRepository;
 
     @GetMapping("/services")
@@ -45,12 +54,40 @@ public class Second_Controller {
         return "services";
     }
 
+    @GetMapping("/userApplications")
+    public String userApplications(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Получаем текущую аутентификацию
+        String username = authentication.getName(); // Получаем имя текущего пользователя
+        UserEntity user = userService.findByUserName(username); // Получаем пользователя из сервиса
+        List<SubmittedApplicationsEntity> userApplications = user.getSubmittedApplications(); // Получаем заявки текущего пользователя
+        model.addAttribute("applications", userApplications); // Передаем заявки в модель для отображения на странице
+        return "userApplications";
+    }
+
     @GetMapping("/submittedApplications")
     public String submittedApplications(Model model){
         Iterable<SubmittedApplicationsEntity> submittedApplications = submittedApplicationsRepository.findAll();
         model.addAttribute("submittedApplications", submittedApplications);
 
         return "submittedApplications";
+    }
+
+    @GetMapping("/about")
+    public String about(){
+        return "about";
+    }
+
+    @GetMapping("/advices")
+    public String advices(){
+        return "advices";
+    }
+
+    @GetMapping("/reviews")
+    public String reviews(Model model){
+        Iterable<PostEntity> posts = postRepository.findAll();
+        model.addAttribute("posts", posts);
+
+        return "reviews";
     }
 
     @GetMapping("/add")
@@ -99,6 +136,49 @@ public class Second_Controller {
                          @RequestParam MultipartFile uploadFile,
                          @RequestParam String anons,
                          @RequestParam String fullText,
+                         Principal principal,
+                         Model model){
+        if(!uploadFile.isEmpty() || uploadFile.getContentType().equals("image/png") || uploadFile.getContentType().equals("image/jpg")){
+            try {
+                String username = principal.getName();
+                // Создаю объект заявки
+                String imgFormat = "." + uploadFile.getOriginalFilename().split("\\.")[1];
+                SubmittedApplicationsEntity submittedApplication = new SubmittedApplicationsEntity();
+                submittedApplication.setTitle(title);
+                submittedApplication.setPublicationDate(new Date(System.currentTimeMillis()));
+                submittedApplication.setAnons(anons);
+                submittedApplication.setImgFormat(imgFormat);
+                submittedApplication.setFullText(fullText);
+
+                UserEntity user = userService.findByUserName(username);
+
+                // Сохраняем заявку с привязкой к пользователю
+                userService.saveUserWithSubmittedApplication(user, submittedApplication).getId();
+
+                long postId = submittedApplicationsRepository.save(submittedApplication).getId();
+                byte[] uploadFileBytes = uploadFile.getBytes();
+
+                BufferedOutputStream bos = new BufferedOutputStream(
+                        new FileOutputStream(
+                                new File("C:/Users/tuf/IdeaProjects/vdrones/src/main/resource_image/" + title + "_" + postId + imgFormat)));
+
+                bos.write(uploadFileBytes);
+                bos.flush();
+                bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            return "/submit";
+        }
+        return "redirect:/services";
+    }
+
+    /*@PostMapping("/submit")
+    public String submit(@RequestParam String title,
+                         @RequestParam MultipartFile uploadFile,
+                         @RequestParam String anons,
+                         @RequestParam String fullText,
                          Model model){
         if(!uploadFile.isEmpty() || uploadFile.getContentType().equals("image/png") || uploadFile.getContentType().equals("image/jpg")){
             try {
@@ -122,7 +202,7 @@ public class Second_Controller {
             return "/submit";
         }
         return "redirect:/services";
-    }
+    }*/
 
     @GetMapping("/services/{id}")
     public String post(@PathVariable(value = "id")long id, Model model){

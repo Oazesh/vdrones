@@ -1,5 +1,6 @@
 package com.vdrones.vdrones.dao.entity.post;
 
+import com.vdrones.vdrones.dao.entity.users.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,11 @@ public class SubmittedApplicationsEntity {
     private String anons;
     @Column(name = "img_format")
     private String imgFormat;
-    @Column(columnDefinition = "varchar(1000)")
+    //@Column(columnDefinition = "varchar(1000)")
+    @Column(name = "fullText")
     private String fullText;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }

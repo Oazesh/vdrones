@@ -26,7 +26,7 @@ public class PostEntity {
     private String anons;
     @Column(name = "img_format")
     private String imgFormat;
-    @Column(columnDefinition = "varchar(1000)")
+    //@Column(columnDefinition = "varchar(1000)")
+    @Column(name = "fullText")
     private String fullText;
-
 }

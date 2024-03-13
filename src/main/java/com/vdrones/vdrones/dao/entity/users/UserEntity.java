@@ -1,6 +1,7 @@
 package com.vdrones.vdrones.dao.entity.users;
 
 
+import com.vdrones.vdrones.dao.entity.post.SubmittedApplicationsEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 
 @Data
@@ -58,6 +60,9 @@ public class UserEntity implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority(role));
     }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<SubmittedApplicationsEntity> submittedApplications;
 
     @Override
     public String getPassword() {
