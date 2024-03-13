@@ -9,6 +9,9 @@
         <ul class="nav nav-pills justify-content-end">
             <li class="nav-item"><a href="/" class="nav-link text-white text-uppercase" aria-current="page">Главная</a></li>
             <li class="nav-item"><a href="/services" class="nav-link text-white text-uppercase">Услуги</a></li>
+            <li class="nav-item"><a href="/advices" class="nav-link text-white text-uppercase">Советы и инструкции</a></li>
+            <li class="nav-item"><a href="/reviews" class="nav-link text-white text-uppercase">Обзоры</a></li>
+            <li class="nav-item"><a href="/about" class="nav-link text-white text-uppercase">О нас</a></li>
             <div th:if="${#request.isUserInRole('ADMIN')}">
                 <li class="nav-item"><a href="/submittedApplications" class="nav-link text-white text-uppercase">Заявки</a></li>
             </div>
@@ -17,6 +20,9 @@
             </div>
             <div th:if="${#request.isUserInRole('USER')}">
                 <li class="nav-item"><a href="/submit" class="nav-link text-white text-uppercase">Подать заявку</a></li>
+            </div>
+            <div th:if="${#request.isUserInRole('USER')}">
+                <li class="nav-item"><a href="/userApplications" class="nav-link text-white text-uppercase">Мои заявки</a></li>
             </div>
             <div sec:authorize="!isAuthenticated()">
                 <li class="nav-item"><a href="/login" class="nav-link text-white text-uppercase">Войти</a></li>
@@ -31,3 +37,4 @@
     </div>
 </div>
 </html>
+
