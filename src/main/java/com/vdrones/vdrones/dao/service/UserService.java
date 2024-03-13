@@ -1,6 +1,7 @@
 package com.vdrones.vdrones.dao.service;
 
 
+import com.vdrones.vdrones.dao.entity.post.SubmittedApplicationsEntity;
 import com.vdrones.vdrones.dao.entity.users.UserEntity;
 import com.vdrones.vdrones.dao.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -32,7 +34,6 @@ public class UserService implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public UserEntity findByUserName(String username){
-
         return userRepository.findByUsername(username);
     }
 
@@ -46,11 +47,31 @@ public class UserService implements UserDetailsService {
         return (List<UserEntity>) userRepository.findAll();
     }
 
-//    @Transactional
+    //@Transactional
     public UserEntity saveUser(UserEntity user) {
         user.setRole("ROLE_USER");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
+
+    @Transactional
+    public UserEntity saveUserWithSubmittedApplication(UserEntity user, SubmittedApplicationsEntity submittedApplications) {
+        //user.setRole("ROLE_USER");
+        //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+        // Привязываем заявку к пользователю
+        submittedApplications.setUser(user);
+
+
+        if (user.getSubmittedApplications() == null) {
+            user.setSubmittedApplications(new ArrayList<>());
+        }
+        user.getSubmittedApplications().add(submittedApplications);
+
+        // Сохраняем пользователя
+        //userRepository.save(user);
+
+        return user;
     }
 
     @Transactional

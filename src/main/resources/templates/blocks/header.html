@@ -9,6 +9,12 @@
 
                         <li><a href="/services" class="text-dark">Услуги</a></li>
 
+                        <li><a href="/advices" class="text-dark">Советы и инструкции</a></li>
+
+                        <li><a href="/reviews" class="text-dark">Обзоры</a></li>
+
+                        <li><a href="/about" class="text-dark">О нас</a></li>
+
                         <div th:if="${#request.isUserInRole('ADMIN')}">
                             <li><a href="/submittedApplications" class="text-dark">Заявки</a></li>
                         </div>
@@ -19,6 +25,10 @@
 
                         <div th:if="${#request.isUserInRole('USER')}">
                             <li><a href="/submit" class="text-dark">Подать заявку</a></li>
+                        </div>
+
+                        <div th:if="${#request.isUserInRole('USER')}">
+                            <li><a href="/userApplications" class="text-dark">Мои заявки</a></li>
                         </div>
 
                         <div sec:authorize="!isAuthenticated()">
