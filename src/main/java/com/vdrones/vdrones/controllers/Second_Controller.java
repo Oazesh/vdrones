@@ -149,6 +149,7 @@ public class Second_Controller {
                 submittedApplication.setAnons(anons);
                 submittedApplication.setImgFormat(imgFormat);
                 submittedApplication.setFullText(fullText);
+                submittedApplication.setStatus("Статус: Ожидает проверки");
 
                 UserEntity user = userService.findByUserName(username);
 
@@ -275,11 +276,11 @@ public class Second_Controller {
     }
 
     @PostMapping("/submittedApplications/{id}/submittedApplicationRedact")
-    public String submittedApplicationsUpdate(@RequestParam String title, @RequestParam String anons, @RequestParam String fullText, @PathVariable(value = "id") long id, Model model){
+    public String submittedApplicationsUpdate(@RequestParam String anons, @RequestParam String fullText, @RequestParam String status, @PathVariable(value = "id") long id, Model model){
         SubmittedApplicationsEntity submittedApplications = submittedApplicationsRepository.findById(id).orElseThrow();
-        submittedApplications.setTitle(title);
         submittedApplications.setAnons(anons);
         submittedApplications.setFullText(fullText);
+        submittedApplications.setStatus(status);
         submittedApplications.setPublicationDate(setDate());
         submittedApplicationsRepository.save(submittedApplications);
 

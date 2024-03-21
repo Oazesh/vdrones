@@ -30,6 +30,8 @@ public class SubmittedApplicationsEntity {
     //@Column(columnDefinition = "varchar(1000)")
     @Column(name = "fullText")
     private String fullText;
+    @Column(name = "status")
+    private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
