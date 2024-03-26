@@ -2,9 +2,11 @@ package com.vdrones.vdrones.controllers;
 
 
 import com.vdrones.vdrones.dao.entity.post.PostEntity;
+import com.vdrones.vdrones.dao.entity.post.ReviewsEntity;
 import com.vdrones.vdrones.dao.entity.post.SubmittedApplicationsEntity;
 import com.vdrones.vdrones.dao.entity.users.UserEntity;
 import com.vdrones.vdrones.dao.repository.PostRepository;
+import com.vdrones.vdrones.dao.repository.ReviewsRepository;
 import com.vdrones.vdrones.dao.repository.SubmittedApplicationsRepository;
 import com.vdrones.vdrones.dao.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,9 @@ public class Second_Controller {
     private PostRepository postRepository;
 
     @Autowired
+    private ReviewsRepository reviewsRepository;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -54,14 +59,12 @@ public class Second_Controller {
         return "services";
     }
 
-    @GetMapping("/userApplications")
-    public String userApplications(Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Получаем текущую аутентификацию
-        String username = authentication.getName(); // Получаем имя текущего пользователя
-        UserEntity user = userService.findByUserName(username); // Получаем пользователя из сервиса
-        List<SubmittedApplicationsEntity> userApplications = user.getSubmittedApplications(); // Получаем заявки текущего пользователя
-        model.addAttribute("applications", userApplications); // Передаем заявки в модель для отображения на странице
-        return "userApplications";
+    @GetMapping("/reviews")
+    public String reviews(Model model){
+        Iterable<ReviewsEntity> reviews = reviewsRepository.findAll();
+        model.addAttribute("reviews", reviews);
+
+        return "reviews";
     }
 
     @GetMapping("/submittedApplications")
@@ -70,6 +73,16 @@ public class Second_Controller {
         model.addAttribute("submittedApplications", submittedApplications);
 
         return "submittedApplications";
+    }
+
+    @GetMapping("/userApplications")
+    public String userApplications(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // Получаем текущую аутентификацию
+        String username = authentication.getName(); // Получаем имя текущего пользователя
+        UserEntity user = userService.findByUserName(username); // Получаем пользователя из сервиса
+        List<SubmittedApplicationsEntity> userApplications = user.getSubmittedApplications(); // Получаем заявки текущего пользователя
+        model.addAttribute("applications", userApplications); // Передаем заявки в модель для отображения на странице
+        return "userApplications";
     }
 
     @GetMapping("/about")
@@ -82,17 +95,14 @@ public class Second_Controller {
         return "advices";
     }
 
-    @GetMapping("/reviews")
-    public String reviews(Model model){
-        Iterable<PostEntity> posts = postRepository.findAll();
-        model.addAttribute("posts", posts);
-
-        return "reviews";
-    }
-
     @GetMapping("/add")
     public String add(){
         return "add";
+    }
+
+    @GetMapping("/addReview")
+    public String addReview(){
+        return "addReview";
     }
 
     @GetMapping("/submit")
@@ -129,6 +139,27 @@ public class Second_Controller {
         }
 
         return "redirect:/services";
+    }
+
+    @PostMapping("/addReview")
+    public String addReview(@RequestParam String title,
+                            @RequestParam String fullText,
+                            Principal principal,
+                            Model model){
+        if (principal != null) {
+            try {
+                String username = principal.getName();
+                ReviewsEntity review = new ReviewsEntity(null, title, setDate(), fullText, username);
+                reviewsRepository.save(review);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "/addReview"; // Возвращаем страницу добавления отзыва в случае ошибки
+            }
+        } else {
+            // Обработка случая, если пользователь не аутентифицирован
+        }
+
+        return "redirect:/reviews"; // Перенаправляем на страницу отзывов после успешного добавления
     }
 
     @PostMapping("/submit")
@@ -218,6 +249,18 @@ public class Second_Controller {
         return "more";
     }
 
+    @GetMapping("/reviews/{id}")
+    public String review(@PathVariable(value = "id")long id, Model model){
+        if(!reviewsRepository.existsById(id)){
+            return "redirect:/reviews";
+        }
+        Optional<ReviewsEntity> reviewsEntityOptional = reviewsRepository.findById(id);
+        ReviewsEntity reviews = reviewsEntityOptional.get();
+        model.addAttribute("moreAboutTheReview", reviews);
+
+        return "reviewMore";
+    }
+
     @GetMapping("/submittedApplications/{id}")
     public String submittedApplications(@PathVariable(value = "id")long id, Model model){
         if(!submittedApplicationsRepository.existsById(id)){
@@ -242,6 +285,22 @@ public class Second_Controller {
 
             model.addAttribute("moreAboutThePost", post);
             return "redact";
+        } else {
+            return "Error";
+        }
+    }
+
+    @GetMapping("/reviews/{id}/redact")
+    public String reviewRedact(@PathVariable(value = "id") long id, Model model){
+        Optional<ReviewsEntity> reviewsEntityOptional = reviewsRepository.findById(id);
+        if (reviewsEntityOptional.isPresent()) {
+            ReviewsEntity reviews = reviewsEntityOptional.get();
+
+            String cleanText = Jsoup.clean(reviews.getFullText(), Whitelist.none());
+            reviews.setFullText(cleanText);
+
+            model.addAttribute("moreAboutTheReview", reviews);
+            return "reviewRedact";
         } else {
             return "Error";
         }
@@ -275,6 +334,20 @@ public class Second_Controller {
         return "redirect:/services/{id}";
     }
 
+    @PostMapping("/reviews/{id}/redact")
+    public String reviewUpdate(@RequestParam String title, @RequestParam String fullText, Principal principal, @PathVariable(value = "id") long id, Model model){
+        ReviewsEntity reviews = reviewsRepository.findById(id).orElseThrow();
+
+        String username = principal.getName();
+
+        reviews.setTitle(title);
+        reviews.setFullText(fullText);
+        reviews.setPublicationDate(setDate());
+        reviewsRepository.save(reviews);
+
+        return "redirect:/reviews/{id}";
+    }
+
     @PostMapping("/submittedApplications/{id}/submittedApplicationRedact")
     public String submittedApplicationsUpdate(@RequestParam String anons, @RequestParam String fullText, @RequestParam String status, @PathVariable(value = "id") long id, Model model){
         SubmittedApplicationsEntity submittedApplications = submittedApplicationsRepository.findById(id).orElseThrow();
@@ -292,6 +365,13 @@ public class Second_Controller {
         postRepository.deleteById(id);
 
         return "redirect:/services";
+    }
+
+    @PostMapping("/reviews/{id}/delete")
+    public String reviewRemove(@PathVariable(value = "id")long id){
+        reviewsRepository.deleteById(id);
+
+        return "redirect:/reviews";
     }
 
     @PostMapping("/submittedApplications/{id}/submittedApplicationDelete")

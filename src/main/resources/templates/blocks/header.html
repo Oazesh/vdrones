@@ -1,22 +1,24 @@
 <html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <div th:fragment="header"
-     class="bg-dark d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+     class="bg-dark d-flex flex-wrap justify-content-center py-3 border-bottom">
     <div class="container d-flex flex-row">
         <a href="/" class="d-flex  mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <strong class="navbar-brand  text-white ">VDRONES</strong>
         </a>
         <ul class="nav nav-pills justify-content-end">
-            <li class="nav-item"><a href="/" class="nav-link text-white text-uppercase" aria-current="page">Главная</a></li>
             <li class="nav-item"><a href="/services" class="nav-link text-white text-uppercase">Услуги</a></li>
             <li class="nav-item"><a href="/advices" class="nav-link text-white text-uppercase">Советы и инструкции</a></li>
-            <li class="nav-item"><a href="/reviews" class="nav-link text-white text-uppercase">Обзоры</a></li>
+            <li class="nav-item"><a href="/reviews" class="nav-link text-white text-uppercase">Отзывы</a></li>
             <li class="nav-item"><a href="/about" class="nav-link text-white text-uppercase">О нас</a></li>
             <div th:if="${#request.isUserInRole('ADMIN')}">
                 <li class="nav-item"><a href="/submittedApplications" class="nav-link text-white text-uppercase">Заявки</a></li>
             </div>
             <div th:if="${#request.isUserInRole('ADMIN')}">
                 <li class="nav-item"><a href="/add" class="nav-link text-white text-uppercase">Добавить услугу</a></li>
+            </div>
+            <div th:if="${#request.isUserInRole('USER')}">
+                <li class="nav-item"><a href="/addReview" class="nav-link text-white text-uppercase">Оставить отзыв</a></li>
             </div>
             <div th:if="${#request.isUserInRole('USER')}">
                 <li class="nav-item"><a href="/submit" class="nav-link text-white text-uppercase">Подать заявку</a></li>
