@@ -2,13 +2,87 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/style.css">
+
     <title>VDRONES</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
+    <style>
+        body {
+            background-color: #ffffff7c;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .general-carousel{
+            padding: 0;
+            margin: 0;
+            box-shadow: 0px 5px 11px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .general-carousel .carousel-item {
+            display: flex;
+            max-height: 500px;
+        }
+        .general-carousel .carousel-item img {
+            object-fit: cover;
+        }
+
+        .general_cards {
+            margin-top: 50px;
+        }
+
+        .general_collumns {
+            display: flex;
+            justify-content: center;
+        }
+
+        .card {
+            box-shadow: 0px 0px 7px 3px rgba(0, 0, 0, 0.2);
+
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .card-title, .card-text {
+            text-align: center;
+        }
+
+        .general_reviews {
+            display: flex;
+            flex-direction: column;
+            margin-top: 50px;
+        }
+
+        .general_rewiew_card{
+            max-width: 40%;
+        }
+
+        .featurette-divider {
+            max-width: 1320px;
+            margin: 0 auto;
+            margin-top: 50px;
+        }
+
+        .general_rewiew_1, .general_rewiew_2, .general_rewiew_3,
+        .general_rewiew_4, .general_rewiew_5 {
+            margin-bottom: 20px;
+        }
+
+        .general_rewiew_1, .general_rewiew_3,
+        .general_rewiew_5 {
+            display: flex;
+            justify-content: end;
+        }
+
+    </style>
 
 </head>
 <body>
@@ -25,7 +99,7 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item ">
-                <img src="./img/test-1drone.jpg" class="d-block w-100" alt="...">
+                <img src="https://www.ixbt.com/img/n1/news/2023/7/5/ixbtmedia_foldable_drone_made_of_expanded_polypropylene_2597efdc-8e0d-4b69-816c-ab82ad3af0f3_large.png" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Метка первого слайда</h5>
                     <p>Некоторый репрезентативный заполнитель для первого слайда.</p>
@@ -33,7 +107,7 @@
                 </div>
             </div>
             <div class="carousel-item active">
-                <img src="./img/test-2drone.jpg" class="d-block w-100" alt="...">
+                <img src="https://sun9-33.userapi.com/impg/x7y8taA0ztXQUP6VKGwmQvQV8LACda77ieGelg/SetBH2TcQCE.jpg?size=1300x600&quality=96&sign=5a2c1360419330ffb02ef22735fbfcca&type=album" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Метка второго слайда</h5>
                     <p>Некоторый репрезентативный заполнитель для второго слайда.</p>
@@ -41,7 +115,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="./img/test-3drone.jpg" class="d-block w-100" alt="...">
+                <img src="https://the-flow.ru/uploads/images/resize/830x0/adaptiveResize/16/17/39/77/36/909350d40cd7.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Метка третьего слайда</h5>
                     <p>Некоторый репрезентативный заполнитель для третьего слайда.</p>
@@ -62,33 +136,15 @@
 
 <div class="container general_cards">
     <div class="row">
-        <div class="col general_collumns">
+        <div class="col general_collumns" th:each = "el : ${threePostForGeneral}">
             <div class="card " style="width: 18rem;">
-                <img src="img/test-1drone_card.jpg" class="card-img-top" alt="...">
+                <img th:src="@{'img/' + ${el.title} + '_' + ${el.id} + ${el.imgFormat}}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Название карточки</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-dark">Узнать больше</a>
-                </div>
-            </div>
-        </div>
-        <div class="col general_collumns">
-            <div class="card " style="width: 18rem;">
-                <img src="img/test-1drone_card.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Название карточки</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-dark">Узнать больше</a>
-                </div>
-            </div>
-        </div>
-        <div class="col general_collumns">
-            <div class="card " style="width: 18rem;">
-                <img src="img/test-1drone_card.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Название карточки</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-dark">Узнать больше</a>
+                    <h5 class="card-title"><text x="20%" y="50%" fill="#eceeef" dy=".3em" th:utext = "${el.title}"/></h5>
+                    <p class="card-text" th:utext = "${el.anons}"/></p>
+                    <form th:action="'/services/' + ${el.id}">
+                        <input class="btn btn-dark" type="submit" value="Просмотреть">
+                    </form>
                 </div>
             </div>
         </div>
@@ -119,26 +175,6 @@
         </div>
     </div>
     <div class="col general_rewiew_3 ">
-        <div class="card general_rewiew_card">
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <p>Известная цитата, содержащаяся в элементе цитаты..</p>
-                    <footer class="blockquote-footer">Кто-то известный в <cite title="Заголовок источника">Заголовке источника</cite></footer>
-                </blockquote>
-            </div>
-        </div>
-    </div>
-    <div class="col general_rewiew_4 ">
-        <div class="card general_rewiew_card">
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <p>Известная цитата, содержащаяся в элементе цитаты..</p>
-                    <footer class="blockquote-footer">Кто-то известный в <cite title="Заголовок источника">Заголовке источника</cite></footer>
-                </blockquote>
-            </div>
-        </div>
-    </div>
-    <div class="col general_rewiew_5 ">
         <div class="card general_rewiew_card">
             <div class="card-body">
                 <blockquote class="blockquote mb-0">

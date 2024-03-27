@@ -23,6 +23,7 @@
                 <p th:utext = "*{anons}"/>
                 <p th:text = "*{publicationDate}"/>
                 <p th:utext = "*{fullText}"/>
+                <p th:utext = "*{status}"/>
                 <form th:action = "'/submittedApplications/' + *{id} + '/submittedApplicationRedact/'" method="get">
                     <button class = "btn btn-primary" type = "submit" th:text = "'Редактировать'"></button>
                 </form>

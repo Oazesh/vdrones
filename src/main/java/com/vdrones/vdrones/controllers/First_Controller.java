@@ -19,11 +19,11 @@ public class First_Controller {
     @GetMapping("/")
     public String mainPackage(Model model){
         Iterable<PostEntity> optional = postRepository.findAll();
-        ArrayList<PostEntity> posts = new ArrayList<>(3);
+        ArrayList<PostEntity> posts = new ArrayList<>(2);
         Iterator<PostEntity> iterator = optional.iterator();
         int counter = 0;
         while (iterator.hasNext()){
-            if(counter > 3){
+            if(counter > 2){
                 break;
             }
 

@@ -22,7 +22,7 @@
         <img th:src="@{'img/' + ${el.title} + '_' + ${el.id} + ${el.imgFormat}}" width="50%" height="50%">
         <h4 th:text = "${el.anons}"/>
         <p th:text="${#dates.format(el.publicationDate, 'dd.MM.yyyy')}"></p>
-        <a th:href = "'/suggestedBlog/' + ${el.id}" class = "btn btn-primary" th:text = "'Просмотреть'"></a>
+        <a th:href = "'/submittedApplications/' + ${el.id}" class = "btn btn-primary" th:text = "'Просмотреть'"></a>
     </div>
 </div>
 <div th:insert="blocks/footer :: footer"></div>

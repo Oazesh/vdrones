@@ -1,6 +1,5 @@
 package com.vdrones.vdrones.dao.entity.post;
 
-import com.vdrones.vdrones.dao.entity.users.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,13 +7,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 
-
 @Data
 @Entity
-@Table(name = "submitted_application")
+@Table(name = "reviews_entity")
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubmittedApplicationsEntity {
+public class ReviewsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,17 +21,8 @@ public class SubmittedApplicationsEntity {
     @Column(name = "publication")
     @Temporal(TemporalType.DATE)
     private Date publicationDate;
-    @Column(name = "anons")
-    private String anons;
-    @Column(name = "img_format")
-    private String imgFormat;
-    //@Column(columnDefinition = "varchar(1000)")
     @Column(name = "fullText")
     private String fullText;
-    @Column(name = "status")
-    private String status;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @Column(name = "username")
+    private String username;
 }
