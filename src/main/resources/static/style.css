@@ -1,0 +1,72 @@
+body {
+    background-color: #ffffff7c;
+}
+
+h1 {
+    margin: 0;
+}
+
+.general-carousel{
+    padding: 0;
+    margin: 0;
+    box-shadow: 0px 5px 11px 2px rgba(0, 0, 0, 0.2);
+}
+
+.general-carousel .carousel-item {
+    display: flex;
+    max-height: 500px;
+}
+.general-carousel .carousel-item img {
+    object-fit: cover;
+}
+
+.general_cards {
+    margin-top: 50px;
+}
+
+.general_collumns {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    box-shadow: 0px 0px 7px 3px rgba(0, 0, 0, 0.2);
+
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.card-title, .card-text {
+    text-align: center;
+}
+
+.general_reviews {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+
+
+.general_rewiew_card{
+    max-width: 40%;
+}
+
+.featurette-divider {
+    max-width: 1320px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.general_rewiew_1, .general_rewiew_2, .general_rewiew_3,
+.general_rewiew_4, .general_rewiew_5 {
+    margin-bottom: 20px;
+}
+
+.general_rewiew_1, .general_rewiew_3,
+.general_rewiew_5 {
+    display: flex;
+    justify-content: end;
+}

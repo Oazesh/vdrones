@@ -115,7 +115,7 @@ public class Second_Controller {
 
                 BufferedOutputStream bos = new BufferedOutputStream(
                         new FileOutputStream(
-                                new File("C:/Users/tuf/IdeaProjects/vdrones/src/main/resource_image/" + title + "_" + postId + imgFormat)));
+                                new File("C:/Users/m1m6m/IdeaProjects/vdrones/src/main/resource_image/" + title + "_" + postId + imgFormat)));
 
                 bos.write(uploadFileBytes);
                 bos.flush();
@@ -160,7 +160,7 @@ public class Second_Controller {
 
                 BufferedOutputStream bos = new BufferedOutputStream(
                         new FileOutputStream(
-                                new File("C:/Users/tuf/IdeaProjects/vdrones/src/main/resource_image/" + title + "_" + postId + imgFormat)));
+                                new File("C:/Users/m1m6m/IdeaProjects/vdrones/src/main/resource_image/" + title + "_" + postId + imgFormat)));
 
                 bos.write(uploadFileBytes);
                 bos.flush();

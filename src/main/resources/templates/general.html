@@ -1,56 +1,155 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/style.css">
     <title>VDRONES</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-    <!-- Bootstrap Font Icon CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous">
-    </script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-</head>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
+</head>
 <body>
+
 <header th:insert="blocks/header :: header"></header>
 
-<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 bg-light">
-    <div class="container">
 
-        <div class="bg-image p-5 shadow-1-strong rounded-3 text-white"
-             style="background-image: url('https://sun9-33.userapi.com/impg/x7y8taA0ztXQUP6VKGwmQvQV8LACda77ieGelg/SetBH2TcQCE.jpg?size=1300x600&quality=96&sign=5a2c1360419330ffb02ef22735fbfcca&type=album');">
-        <div class="container-fluid py-5">
-                <h1 class="display-3 fw-bold">VDRONES</h1>
-                <p class="col-md-5 fs-4 text-dark">VDRONES! Веб-сайт о предоставлении услуг ремонтирования беспилотных летательных аппаратов!</p>
-            </div>
+<div class="container-fluid general-carousel">
+    <div id="carouselExampleInterval" class="carousel slide carousel-fade">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleInterval" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleInterval" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleInterval" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-
-        <p>Всем привет!</p>
-        <div class="row row-cols-md-2 g-3" th:each = "el : ${threePostForGeneral}" >
-            <div class="col">
-                <div class="card shadow-sm">
-                    <div class="h-100 p-5 text-white bg-dark rounded-3"  >
-                        <h2><text x="20%" y="50%" fill="#eceeef" dy=".3em" th:utext = "${el.title}"/></h2>
-                        <p th:utext = "${el.anons}"/></p>
-                        <form th:action="'/services/' + ${el.id}">
-                            <input class="btn btn-outline-light" type="submit" value="Просмотреть">
-                        </form>
-                    </div>
+        <div class="carousel-inner">
+            <div class="carousel-item ">
+                <img src="./img/test-1drone.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Метка первого слайда</h5>
+                    <p>Некоторый репрезентативный заполнитель для первого слайда.</p>
+                    <p><a class="btn btn-lg btn-dark" href="#">Подать заявку</a></p>
                 </div>
             </div>
-            <div class="col">
-                <div class="card shadow-sm">
-                    <img th:src="@{'img/' + ${el.title} + '_' + ${el.id} + ${el.imgFormat}}" width="100%" height="100%">
+            <div class="carousel-item active">
+                <img src="./img/test-2drone.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Метка второго слайда</h5>
+                    <p>Некоторый репрезентативный заполнитель для второго слайда.</p>
+                    <p><a class="btn btn-lg btn-dark" href="#">Подать заявку</a></p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="./img/test-3drone.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Метка третьего слайда</h5>
+                    <p>Некоторый репрезентативный заполнитель для третьего слайда.</p>
+                    <p><a class="btn btn-lg btn-dark" href="#">Подать заявку</a></p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<div class="container general_cards">
+    <div class="row">
+        <div class="col general_collumns">
+            <div class="card " style="width: 18rem;">
+                <img src="img/test-1drone_card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Название карточки</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-dark">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="col general_collumns">
+            <div class="card " style="width: 18rem;">
+                <img src="img/test-1drone_card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Название карточки</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-dark">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="col general_collumns">
+            <div class="card " style="width: 18rem;">
+                <img src="img/test-1drone_card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Название карточки</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-dark">Узнать больше</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<hr class="featurette-divider">
+
+<div class="container general_reviews">
+    <div class="col general_rewiew_1">
+        <div class="card general_rewiew_card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>Известная цитата, содержащаяся в элементе цитаты..</p>
+                    <footer class="blockquote-footer">Кто-то известный в <cite title="Заголовок источника">Заголовке источника</cite></footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <div class="col general_rewiew_2">
+        <div class="card general_rewiew_card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>Известная цитата, содержащаяся в элементе цитаты..</p>
+                    <footer class="blockquote-footer">Кто-то известный в <cite title="Заголовок источника">Заголовке источника</cite></footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <div class="col general_rewiew_3 ">
+        <div class="card general_rewiew_card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>Известная цитата, содержащаяся в элементе цитаты..</p>
+                    <footer class="blockquote-footer">Кто-то известный в <cite title="Заголовок источника">Заголовке источника</cite></footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <div class="col general_rewiew_4 ">
+        <div class="card general_rewiew_card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>Известная цитата, содержащаяся в элементе цитаты..</p>
+                    <footer class="blockquote-footer">Кто-то известный в <cite title="Заголовок источника">Заголовке источника</cite></footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <div class="col general_rewiew_5 ">
+        <div class="card general_rewiew_card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>Известная цитата, содержащаяся в элементе цитаты..</p>
+                    <footer class="blockquote-footer">Кто-то известный в <cite title="Заголовок источника">Заголовке источника</cite></footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div th:insert="blocks/footer :: footer"></div>
 </body>
 </html>
