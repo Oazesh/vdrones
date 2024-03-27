@@ -11,10 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 
     <style>
-        body {
-            background-color: #ffffff7c;
-        }
-
         h1 {
             margin: 0;
         }
@@ -27,7 +23,7 @@
 
         .general-carousel .carousel-item {
             display: flex;
-            max-height: 500px;
+            max-height: 700px;
         }
         .general-carousel .carousel-item img {
             object-fit: cover;
@@ -46,12 +42,17 @@
             box-shadow: 0px 0px 7px 3px rgba(0, 0, 0, 0.2);
 
         }
+
         .card-body {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+
         }
-        .card-title, .card-text {
+
+        .card-text {
+            text-align: start;
+        }
+        .card-title {
             text-align: center;
         }
 
@@ -61,25 +62,42 @@
             margin-top: 50px;
         }
 
-        .general_rewiew_card{
-            max-width: 40%;
+        .general_rewiew_card-right, .general_rewiew_card-left {
+            min-width: 48%;
+
         }
 
         .featurette-divider {
             max-width: 1320px;
             margin: 0 auto;
             margin-top: 50px;
+
         }
 
-        .general_rewiew_1, .general_rewiew_2, .general_rewiew_3,
-        .general_rewiew_4, .general_rewiew_5 {
-            margin-bottom: 20px;
+        .general_blockquote-right{
+            text-align: end;
         }
-
-        .general_rewiew_1, .general_rewiew_3,
-        .general_rewiew_5 {
+        .general_blockquote-left {
+            text-align: start;
+        }
+        .general_rewiew-left {
             display: flex;
+            flex-direction: column;
+            justify-content: start;
+
+        }
+
+        .general_rewiew-right {
+            display: flex;
+            flex-direction: column;
             justify-content: end;
+
+        }
+
+        .general_form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
     </style>
@@ -142,7 +160,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><text x="20%" y="50%" fill="#eceeef" dy=".3em" th:utext = "${el.title}"/></h5>
                     <p class="card-text" th:utext = "${el.anons}"/></p>
-                    <form th:action="'/services/' + ${el.id}">
+                    <form class="general_form" th:action="'/services/' + ${el.id}">
                         <input class="btn btn-dark" type="submit" value="Просмотреть">
                     </form>
                 </div>
@@ -154,37 +172,52 @@
 <hr class="featurette-divider">
 
 <div class="container general_reviews">
-    <div class="col general_rewiew_1">
-        <div class="card general_rewiew_card">
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <p>Известная цитата, содержащаяся в элементе цитаты..</p>
-                    <footer class="blockquote-footer">Кто-то известный в <cite title="Заголовок источника">Заголовке источника</cite></footer>
-                </blockquote>
+    <div class="general_title" style="text-align: center; margin-bottom: 15px" >
+        <h2 style="margin: 0;">Отзывы</h2>
+    </div>
+    <div class="row">
+        <div class="col general_rewiew-left" >
+            <div class="card general_rewiew_card-left" style="margin-bottom: 15px;">
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0 general_blockquote-left">
+                        <p>Спасибо, все четко и быстро</p>
+                        <footer class="blockquote-footer">Иван Иванов Иванович</footer>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="card general_rewiew_card-left" style="margin-bottom: 15px;">
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0 general_blockquote-left">
+                        <p>Спасибо, все четко и быстро</p>
+                        <footer class="blockquote-footer">Иван Иванов Иванович</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        <div class="col general_rewiew-right " >
+            <div class="card general_rewiew_card-right" style="margin-bottom: 15px;">
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0 general_blockquote-right">
+                        <p>Спасибо, все четко и быстро</p>
+                        <footer class="blockquote-footer">Иван Иванов Иванович</footer>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="card general_rewiew_card-right" style="margin-bottom: 15px;">
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0 general_blockquote-right">
+                        <p>Спасибо, все четко и быстро</p>
+                        <footer class="blockquote-footer">Иван Иванов Иванович</footer>
+                    </blockquote>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col general_rewiew_2">
-        <div class="card general_rewiew_card">
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <p>Известная цитата, содержащаяся в элементе цитаты..</p>
-                    <footer class="blockquote-footer">Кто-то известный в <cite title="Заголовок источника">Заголовке источника</cite></footer>
-                </blockquote>
-            </div>
-        </div>
-    </div>
-    <div class="col general_rewiew_3 ">
-        <div class="card general_rewiew_card">
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <p>Известная цитата, содержащаяся в элементе цитаты..</p>
-                    <footer class="blockquote-footer">Кто-то известный в <cite title="Заголовок источника">Заголовке источника</cite></footer>
-                </blockquote>
-            </div>
-        </div>
-    </div>
+
 </div>
+
+
+
 
 <div th:insert="blocks/footer :: footer"></div>
 </body>

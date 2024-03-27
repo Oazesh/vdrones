@@ -1,12 +1,13 @@
 <html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<div th:fragment="header"
-     class="bg-dark d-flex flex-wrap justify-content-center py-3 border-bottom">
+<div th:fragment="header" class="bg-dark d-flex flex-wrap justify-content-center py-3 fixed-top">
     <div class="container d-flex flex-row">
+
         <a href="/" class="d-flex  mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <strong class="navbar-brand  text-white ">VDRONES</strong>
         </a>
-        <ul class="nav nav-pills justify-content-end">
+
+        <ul class="nav nav-pills justify-content-end " >
             <li class="nav-item"><a href="/services" class="nav-link text-white text-uppercase">Услуги</a></li>
             <li class="nav-item"><a href="/advices" class="nav-link text-white text-uppercase">Советы и инструкции</a></li>
             <li class="nav-item"><a href="/reviews" class="nav-link text-white text-uppercase">Отзывы</a></li>
@@ -36,6 +37,7 @@
                 <li class="nav-item"><a href="/logout" class="nav-link text-white text-uppercase">Выйти из аккаунта</a></li>
             </div>
         </ul>
+
     </div>
 </div>
 </html>
